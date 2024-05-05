@@ -1,11 +1,11 @@
 import React from 'react';
 import {SafeAreaView, Text} from 'react-native';
-const Home = () => {
+const Barcode = () => {
   return (
     <SafeAreaView>
-      <Text>Home Screen</Text>
+      <Text>Barcode Screen</Text>
     </SafeAreaView>
   );
 };
 
-export default Home;
+export default Barcode;
