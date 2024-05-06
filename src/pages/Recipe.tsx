@@ -1,11 +1,11 @@
 import React from 'react';
 import {SafeAreaView, Text} from 'react-native';
-const Home = () => {
+const Recipe = () => {
   return (
     <SafeAreaView>
-      <Text>Home Screen</Text>
+      <Text>Recipe Screen</Text>
     </SafeAreaView>
   );
 };
 
-export default Home;
+export default Recipe;
