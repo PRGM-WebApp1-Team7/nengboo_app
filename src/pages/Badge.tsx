@@ -1,10 +1,12 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {WebView} from 'react-native-webview';
+
 const Badge = () => {
   return (
-    <SafeAreaView>
-      <Text>Badge Screen</Text>
-    </SafeAreaView>
+    <WebView
+      source={{uri: 'http://localhost:3000/badge'}}
+      className={`flex flex-1`}
+    />
   );
 };
 

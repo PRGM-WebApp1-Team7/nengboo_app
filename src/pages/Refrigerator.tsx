@@ -1,13 +1,13 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
 
-const Recipe = () => {
+const Refrigerator = () => {
   return (
     <WebView
-      source={{uri: 'http://localhost:3000/recipe'}}
+      source={{uri: 'http://localhost:3000/main'}}
       className={`flex flex-1`}
     />
   );
 };
 
-export default Recipe;
+export default Refrigerator;

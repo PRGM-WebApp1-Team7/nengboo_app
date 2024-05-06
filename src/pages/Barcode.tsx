@@ -1,10 +1,12 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {WebView} from 'react-native-webview';
+
 const Barcode = () => {
   return (
-    <SafeAreaView>
-      <Text>Barcode Screen</Text>
-    </SafeAreaView>
+    <WebView
+      source={{uri: 'http://localhost:3000/barcode'}}
+      className={`flex flex-1`}
+    />
   );
 };
 
