@@ -1,5 +1,6 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
+import {LOCAL_URL, HOSTING_URL} from '@env';
 
 const Login = ({navigation}) => {
   const handleOnMessage = e => {
@@ -12,7 +13,7 @@ const Login = ({navigation}) => {
 
   return (
     <WebView
-      source={{uri: 'http://localhost:3000'}}
+      source={{uri: __DEV__ === true ? LOCAL_URL : HOSTING_URL}}
       onMessage={handleOnMessage}
       className={`flex flex-1`}
     />
