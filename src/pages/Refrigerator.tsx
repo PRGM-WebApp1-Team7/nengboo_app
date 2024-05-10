@@ -3,16 +3,16 @@ import {SafeAreaView} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {LOCAL_URL, HOSTING_URL} from '@env';
 
-const Badge = () => {
+const Refrigerator = () => {
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
         source={{
-          uri: __DEV__ === true ? `${LOCAL_URL}/badge` : `${HOSTING_URL}/badge`,
+          uri: __DEV__ === true ? `${LOCAL_URL}/main` : `${HOSTING_URL}/main`,
         }}
       />
     </SafeAreaView>
   );
 };
 
-export default Badge;
+export default Refrigerator;

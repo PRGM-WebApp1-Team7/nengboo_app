@@ -1,9 +1,19 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView} from 'react-native';
+import {WebView} from 'react-native-webview';
+import {LOCAL_URL, HOSTING_URL} from '@env';
+
 const Barcode = () => {
   return (
-    <SafeAreaView>
-      <Text>Barcode Screen</Text>
+    <SafeAreaView className={`flex flex-1`}>
+      <WebView
+        source={{
+          uri:
+            __DEV__ === true
+              ? `${LOCAL_URL}/barcode`
+              : `${HOSTING_URL}/barcode`,
+        }}
+      />
     </SafeAreaView>
   );
 };
