@@ -58,3 +58,4 @@ const Barcode: React.FC<{navigation: any}> = ({navigation}) => {
     </StyledSafeAreaView>
   );
 };
+export default Barcode;
