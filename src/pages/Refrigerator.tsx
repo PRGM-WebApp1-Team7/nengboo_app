@@ -8,7 +8,10 @@ const Refrigerator = () => {
     <SafeAreaView className={`flex flex-1`}>
       <WebView
         source={{
-          uri: __DEV__ === true ? `${LOCAL_URL}/main` : `${HOSTING_URL}/main`,
+          uri:
+            __DEV__ === true
+              ? `${LOCAL_URL}/refrigerator`
+              : `${HOSTING_URL}/refrigerator`,
         }}
       />
     </SafeAreaView>
