@@ -6,10 +6,20 @@ import Recipe from './pages/Recipe.tsx';
 import Barcode from './pages/Barcode.tsx';
 import Badge from './pages/Badge.tsx';
 import Login from './pages/Login.tsx';
+import ItemDetail from './pages/ItemDetail.tsx';
+import ItemPost from './pages/ItemPost.tsx';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 const renderTabBar = props => <CustomBottomTab {...props} />;
+
+export type RootStackParamList = {
+  Scan: undefined;
+  ItemDetail: {product_id: string};
+  ItemPost: undefined;
+  Login: undefined;
+  MainTab: undefined;
+};
 
 const MainTab = () => {
   return (
@@ -28,12 +38,12 @@ const MainTab = () => {
 
 const Router = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="MainTab" component={MainTab} />
+      <Stack.Screen name="Scan" component={Barcode} />
+      <Stack.Screen name="ItemDetail" component={ItemDetail} />
+      <Stack.Screen name="ItemPost" component={ItemPost} />
     </Stack.Navigator>
   );
 };
