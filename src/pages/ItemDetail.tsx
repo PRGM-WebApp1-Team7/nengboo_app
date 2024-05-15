@@ -14,10 +14,6 @@ type Props = {
 const ItemDetail: React.FC<Props> = ({route}) => {
   const {product_id} = route.params;
 
-  const handleImageCaptured = async (photo: string) => {
-    console.log('Photo path:', photo);
-  };
-  
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView

@@ -8,7 +8,6 @@ import Badge from './pages/Badge.tsx';
 import Login from './pages/Login.tsx';
 import ItemDetail from './pages/ItemDetail.tsx';
 import ItemPost from './pages/ItemPost.tsx';
-import BarcodeScanner from './components/BarcodeScanner.tsx';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -20,7 +19,6 @@ export type RootStackParamList = {
   ItemPost: undefined;
   Login: undefined;
   MainTab: undefined;
-  Refrigerator: undefined;
 };
 
 const MainTab = () => {
@@ -43,7 +41,6 @@ const Router = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="MainTab" component={MainTab} />
-      <Stack.Screen name="Refrigerator" component={Refrigerator} />
       <Stack.Screen name="Scan" component={Barcode} />
       <Stack.Screen name="ItemDetail" component={ItemDetail} />
       <Stack.Screen name="ItemPost" component={ItemPost} />

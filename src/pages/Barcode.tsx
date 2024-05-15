@@ -49,7 +49,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
   useEffect(() => {
     if (product_id) {
       if (barcodeScanned && photoCaptured) {
-        navigation.navigate('ItemDetail', { product_id });
+        navigation.navigate('ItemDetail', {product_id});
       } else if (photoCaptured) {
         navigation.navigate('ItemPost');
       }
@@ -96,9 +96,8 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
 
           setProductId(insertedData[0].product_id);
           setBarcodeScanned(true);
-          
+
           handleImageCaptured(photo!, barcodeData);
-  
         }
       } catch (error) {
         console.error(error);
@@ -106,10 +105,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
     }
   };
 
-  const handleImageCaptured = async (
-    photo: string,
-    barcodeData?: string,
-  ) => {
+  const handleImageCaptured = async (photo: string, barcodeData?: string) => {
     try {
       const fileName = `public/product_${Date.now()}.jpg`;
       const {data: imageData, error: imageError} = await supabase.storage

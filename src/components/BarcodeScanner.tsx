@@ -52,7 +52,7 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
 
   const codeScanner = useCodeScanner({
     codeTypes: ['ean-13', 'upc-a'],
-    onCodeScanned: (codes) => {
+    onCodeScanned: codes => {
       if (isScanningMode && onBarcodeScanned) {
         setIsScanningMode(false);
         Alert.alert('바코드 스캔 완료', '상품 사진을 등록해주세요.', [
