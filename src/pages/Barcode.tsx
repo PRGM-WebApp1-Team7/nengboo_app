@@ -15,6 +15,9 @@ type BarcodeProps = {
 
 const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
   const [isScanning, setIsScanning] = useState<boolean>(true);
+  const [barcodeScanned, setBarcodeScanned] = useState<boolean>(false);
+  const [photoCaptured, setPhotoCaptured] = useState<boolean>(false);
+  const [product_id, setProductId] = useState<string | null>(null);
   const [permissionStatus, checkAndRequestPermission] = useCameraPermissions();
 
   useFocusEffect(
@@ -43,7 +46,17 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
     }
   }, [permissionStatus]);
 
-  const handleBarcodeScanned = async (codes: Code[]) => {
+  useEffect(() => {
+    if (product_id) {
+      if (barcodeScanned && photoCaptured) {
+        navigation.navigate('ItemDetail', { product_id });
+      } else if (photoCaptured) {
+        navigation.navigate('ItemPost');
+      }
+    }
+  }, [barcodeScanned, photoCaptured, navigation, product_id]);
+
+  const handleBarcodeScanned = async (codes: Code[], photo?: string) => {
     if (codes.length > 0) {
       const barcodeData = codes[0].value;
       try {
@@ -54,13 +67,12 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
           .single();
 
         if (error) {
-          console.error('Error fetching product info:', error);
+          console.error('제품 정보 불러오기 실패:', error);
           throw error;
         }
 
         if (data) {
           const insertData = {
-            product_id: data.id,
             refrige_id: null,
             product_name: data.product_name,
             product_expiration_date: data.product_expiration_date,
@@ -71,35 +83,84 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
             barcode: data.barcode,
             product_memo: null,
             product_quantity: 1,
+            product_cookable: true,
           };
-
-          const {error: insertError} = await supabase
+          const {data: insertedData, error: insertError} = await supabase
             .from('products')
-            .insert([insertData]);
+            .insert([insertData])
+            .select('product_id');
 
           if (insertError) {
             throw new Error('제품 정보 삽입 실패: ' + insertError.message);
           }
 
-          navigation.navigate('ItemDetail', {product_id: data.id});
-        } else {
-          Alert.alert(
-            '바코드에 해당하는 제품 정보가 없습니다. 수동 등록해주세요.',
-          );
-          navigation.navigate('ItemPost');
+          setProductId(insertedData[0].product_id);
+          setBarcodeScanned(true);
+          
+          handleImageCaptured(photo!, barcodeData);
+  
         }
       } catch (error) {
         console.error(error);
       }
-    } else {
-      Alert.alert('바코드를 찾을 수 없습니다', '다시 스캔해 주세요.');
+    }
+  };
+
+  const handleImageCaptured = async (
+    photo: string,
+    barcodeData?: string,
+  ) => {
+    try {
+      const fileName = `public/product_${Date.now()}.jpg`;
+      const {data: imageData, error: imageError} = await supabase.storage
+        .from('images')
+        .upload(fileName, photo, {
+          contentType: 'image/jpeg',
+        });
+
+      if (imageError) {
+        console.error('이미지 업로드 에러:', imageError.message);
+      }
+
+      const publicUrl = await supabase.storage
+        .from('images')
+        .getPublicUrl(`${imageData!.path}`);
+
+      if (barcodeData) {
+        await supabase
+          .from('products')
+          .update({product_image: publicUrl})
+          .eq('barcode', barcodeData);
+
+        setPhotoCaptured(true);
+      } else {
+        const productData = {
+          product_image: publicUrl,
+          product_cookable: true,
+        };
+
+        const {data: insertedData, error: insertError} = await supabase
+          .from('products')
+          .insert([productData]);
+
+        if (insertError) {
+          throw new Error('제품 정보 삽입 실패: ' + insertError.message);
+        }
+        setPhotoCaptured(true);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
     <SafeAreaView className={`flex flex-1`}>
       {isScanning ? (
-        <BarcodeScanner onBarcodeScanned={handleBarcodeScanned} />
+        <BarcodeScanner
+          onBarcodeScanned={handleBarcodeScanned}
+          onImageCaptured={handleImageCaptured}
+          navigation={navigation}
+        />
       ) : null}
     </SafeAreaView>
   );
