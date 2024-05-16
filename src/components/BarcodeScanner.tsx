@@ -5,6 +5,7 @@ import {
   useCodeScanner,
   Code,
   CodeScannerFrame,
+  PhotoFile,
 } from 'react-native-vision-camera';
 import {View, Alert} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -12,8 +13,8 @@ import CameraBottomBar from './CameraBottomBar.tsx';
 import type {RootStackParamList} from '../Router';
 
 interface BarcodeScannerProps {
-  onBarcodeScanned?: (codes: Code[], photo?: string) => void;
-  onImageCaptured?: (photo: string, barcodeData?: string) => void;
+  onBarcodeScanned?: (codes: Code[], photo?: PhotoFile) => void;
+  onImageCaptured?: (photo: PhotoFile, barcodeData?: string) => void;
   navigation: StackNavigationProp<RootStackParamList, 'Scan'>;
 }
 
@@ -45,7 +46,7 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       const photo = await cameraRef.current.takePhoto();
       setIsCapturingPhoto(false);
       if (onImageCaptured) {
-        onImageCaptured(photo.path);
+        onImageCaptured(photo);
       }
     }
   };
