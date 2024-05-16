@@ -25,6 +25,10 @@ const ItemDetail: React.FC<Props> = ({route}) => {
   }, []);
   const {product_id} = route.params;
 
+  const handleOnMessage = event => {
+    const {message} = JSON.parse(event.nativeEvent.data);
+    console.log(message);
+  };
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
@@ -34,6 +38,7 @@ const ItemDetail: React.FC<Props> = ({route}) => {
               ? `${LOCAL_URL}/itemDetail?product_id=${product_id}&refrige_id=${refrige}&user_id=${user}`
               : `${HOSTING_URL}/itemDetail?product_id=${product_id}&refrige_id=${refrige}&user_id=${user}`,
         }}
+        onMessage={handleOnMessage}
       />
     </SafeAreaView>
   );

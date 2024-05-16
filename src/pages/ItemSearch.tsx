@@ -17,6 +17,10 @@ const ItemSearch = ({route}) => {
   }, []);
   const {searchTerm} = route.params;
 
+  const handleOnMessage = event => {
+    const {message} = JSON.parse(event.nativeEvent.data);
+    console.log(message);
+  };
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
@@ -26,6 +30,7 @@ const ItemSearch = ({route}) => {
               ? `${LOCAL_URL}/itemSearch?product_id=${searchTerm}&refrige_id=${refrige}&user_id=${user}`
               : `${HOSTING_URL}/itemSearch?product_id=${searchTerm}&refrige_id=${refrige}&user_id=${user}`,
         }}
+        onMessage={handleOnMessage}
       />
     </SafeAreaView>
   );
