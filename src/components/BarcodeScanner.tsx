@@ -62,7 +62,6 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
             onPress: () => {
               onBarcodeScanned(codes);
               onCameraModeChange('photo');
-              setIsCapturingPhoto(true);
             },
           },
           {
