@@ -7,6 +7,7 @@ import {getData} from '../utils/asyncstorage';
 const ItemPost = () => {
   const [refrige, setRefrige] = useState('');
   const [user, setUser] = useState('');
+
   useEffect(() => {
     const init = async () => {
       const data = await getData();
@@ -15,14 +16,15 @@ const ItemPost = () => {
     };
     init();
   }, []);
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
         source={{
           uri:
             __DEV__ === true
-              ? `${LOCAL_URL}/ItemPost?refrige_id=${refrige}&user_id=${user}`
-              : `${HOSTING_URL}/ItemPost?refrige_id=${refrige}&user_id=${user}`,
+              ? `${LOCAL_URL}/itemPost?refrige_id=${refrige}&user_id=${user}`
+              : `${HOSTING_URL}/itemPost?refrige_id=${refrige}&user_id=${user}`,
         }}
       />
     </SafeAreaView>

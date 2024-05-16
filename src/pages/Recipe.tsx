@@ -3,6 +3,7 @@ import {SafeAreaView} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {LOCAL_URL, HOSTING_URL} from '@env';
 import {getData} from '../utils/asyncstorage';
+
 const Recipe = () => {
   const [refrige, setRefrige] = useState('');
   useEffect(() => {

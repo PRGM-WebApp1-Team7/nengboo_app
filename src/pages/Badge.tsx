@@ -7,6 +7,7 @@ import {getData} from '../utils/asyncstorage';
 const Badge = () => {
   const [refrige, setRefrige] = useState('');
   const [user, setUser] = useState('');
+
   useEffect(() => {
     const init = async () => {
       const data = await getData();
@@ -15,6 +16,7 @@ const Badge = () => {
     };
     init();
   }, []);
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView

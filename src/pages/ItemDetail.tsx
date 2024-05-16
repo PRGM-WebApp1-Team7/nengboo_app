@@ -24,6 +24,7 @@ const ItemDetail: React.FC<Props> = ({route}) => {
     init();
   }, []);
   const {product_id} = route.params;
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
