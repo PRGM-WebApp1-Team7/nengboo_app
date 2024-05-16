@@ -1,12 +1,14 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
 import {LOCAL_URL, HOSTING_URL} from '@env';
+import {storeData} from '../utils/asyncstorage';
 
 const Login = ({navigation}) => {
-  const handleOnMessage = e => {
+  const handleOnMessage = async e => {
     const {message} = JSON.parse(e.nativeEvent.data);
-    console.log(message);
-    if (message === 'login') {
+    const data = JSON.parse(message);
+    if (!!data) {
+      await storeData(data);
       navigation.navigate('MainTab');
     }
   };
