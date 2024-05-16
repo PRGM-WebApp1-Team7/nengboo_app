@@ -83,12 +83,8 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
             barcode: data.barcode,
             product_memo: null,
             product_quantity: 1,
-<<<<<<< HEAD
-            product_cookable: 'ingredient',
-=======
             product_cookable: true,
             product_image: data.product_image,
->>>>>>> e89338f95a8c6d017818527d221696b47a9db732
           };
           const {data: insertedData, error: insertError} = await supabase
             .from('products')
@@ -110,7 +106,10 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
     }
   };
 
-  const handleImageCaptured = async (photo: PhotoFile, barcodeData?: string) => {
+  const handleImageCaptured = async (
+    photo: PhotoFile,
+    barcodeData?: string,
+  ) => {
     try {
       const fileName = `public/product_${Date.now()}.jpg`;
       const {data: imageData, error: imageError} = await supabase.storage
@@ -118,39 +117,39 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
         .upload(fileName, photo, {
           contentType: 'image/jpeg',
         });
-  
+
       if (imageError) {
         console.error('이미지 업로드 에러:', imageError.message);
       }
-  
+
       const publicUrl = await supabase.storage
         .from('images')
         .getPublicUrl(`${imageData!.path}`);
-  
+
       const url = publicUrl.data.publicUrl;
-  
+
       if (barcodeData) {
         await supabase
           .from('products')
           .update({product_image: url})
           .eq('barcode', barcodeData);
-  
+
         setPhotoCaptured(true);
       } else {
         const productData = {
           product_image: url,
           product_cookable: 'ingredient',
         };
-  
+
         const {data: insertedData, error: insertError} = await supabase
           .from('products')
           .insert([productData])
-          .select('product_id')
-  
+          .select('product_id');
+
         if (insertError) {
           throw new Error('제품 정보 삽입 실패: ' + insertError.message);
         }
-  
+
         setProductId(insertedData[0].product_id);
         setPhotoCaptured(true);
       }

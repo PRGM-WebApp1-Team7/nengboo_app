@@ -3,6 +3,7 @@ import {SafeAreaView} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {LOCAL_URL, HOSTING_URL} from '@env';
 import {getData} from '../utils/asyncstorage';
+
 const Recipe = () => {
   const [refrige, setRefrige] = useState('');
   useEffect(() => {
@@ -25,7 +26,7 @@ const Recipe = () => {
             uri:
               __DEV__ === true
                 ? `${LOCAL_URL}/recipe?refrige_id=${refrige}`
-                : `${HOSTING_URL}/recipe`,
+                : `${HOSTING_URL}/recipe?refrige_id=${refrige}`,
           }}
           onMessage={handleOnMessage}
         />
