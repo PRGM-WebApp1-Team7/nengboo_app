@@ -28,7 +28,8 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vision-camera": "^4.0.1",
-    "react-native-webview": "^13.8.7"
+    "react-native-webview": "^13.8.7",
+    "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
