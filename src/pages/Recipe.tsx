@@ -25,7 +25,7 @@ const Recipe = () => {
             uri:
               __DEV__ === true
                 ? `${LOCAL_URL}/recipe?refrige_id=${refrige}`
-                : `${HOSTING_URL}/recipe`,
+                : `${HOSTING_URL}/recipe?refrige_id=${refrige}`,
           }}
           onMessage={handleOnMessage}
         />
