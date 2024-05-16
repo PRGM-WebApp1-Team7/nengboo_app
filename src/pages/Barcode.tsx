@@ -161,6 +161,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
         const {data: insertedData, error: insertError} = await supabase
           .from('products')
           .insert([insertData])
+          .select()
 
         if (insertError) {
           throw new Error('제품 정보 삽입 실패: ' + insertError.message);
