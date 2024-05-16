@@ -50,13 +50,13 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
     if (product_id) {
       if (barcodeScanned && photoCaptured) {
         navigation.navigate('ItemDetail', {product_id});
-      } else if (photoCaptured) {
+      } else {
         navigation.navigate('ItemPost');
       }
     }
   }, [barcodeScanned, photoCaptured, navigation, product_id]);
 
-  const handleBarcodeScanned = async (codes: Code[], photo?: string) => {
+  const handleBarcodeScanned = async (codes: Code[], photo?: PhotoFile) => {
     if (codes.length > 0) {
       const barcodeData = codes[0].value;
       try {
@@ -84,6 +84,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
             product_memo: null,
             product_quantity: 1,
             product_cookable: true,
+            product_image: data.product_image,
           };
           const {data: insertedData, error: insertError} = await supabase
             .from('products')
@@ -105,7 +106,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
     }
   };
 
-  const handleImageCaptured = async (photo: string, barcodeData?: string) => {
+  const handleImageCaptured = async (photo: PhotoFile, barcodeData?: string) => {
     try {
       const fileName = `public/product_${Date.now()}.jpg`;
       const {data: imageData, error: imageError} = await supabase.storage
@@ -113,39 +114,41 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
         .upload(fileName, photo, {
           contentType: 'image/jpeg',
         });
-
+  
       if (imageError) {
         console.error('이미지 업로드 에러:', imageError.message);
       }
-
+  
       const publicUrl = await supabase.storage
         .from('images')
         .getPublicUrl(`${imageData!.path}`);
-
+  
       const url = publicUrl.data.publicUrl;
-
+  
       if (barcodeData) {
         await supabase
           .from('products')
           .update({product_image: url})
           .eq('barcode', barcodeData);
-
+  
         setPhotoCaptured(true);
       } else {
         const productData = {
           product_image: url,
           product_cookable: 'ingredient',
         };
-
+  
         const {data: insertedData, error: insertError} = await supabase
           .from('products')
-          .insert([productData]);
-
+          .insert([productData])
+          .select('product_id')
+  
         if (insertError) {
           throw new Error('제품 정보 삽입 실패: ' + insertError.message);
         }
+  
+        setProductId(insertedData[0].product_id);
         setPhotoCaptured(true);
-        console.log('제품 정보 삽입 성공!')
       }
     } catch (error) {
       console.error(error);
