@@ -10,8 +10,8 @@ const ItemPost = () => {
         source={{
           uri:
             __DEV__ === true
-              ? `${LOCAL_URL}/ItemPost`
-              : `${HOSTING_URL}/ItemPost`,
+              ? `${LOCAL_URL}/itemPost`
+              : `${HOSTING_URL}/itemPost`,
         }}
       />
     </SafeAreaView>
