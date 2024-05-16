@@ -16,7 +16,7 @@ const renderTabBar = props => <CustomBottomTab {...props} />;
 export type RootStackParamList = {
   Scan: undefined;
   ItemDetail: {product_id: string};
-  ItemPost: undefined;
+  ItemPost: { product_id: string };
   Login: undefined;
   MainTab: undefined;
 };

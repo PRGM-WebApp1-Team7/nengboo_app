@@ -2,9 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {LOCAL_URL, HOSTING_URL} from '@env';
+import {RouteProp} from '@react-navigation/native';
+import type {RootStackParamList} from '../Router';
 import {getData} from '../utils/asyncstorage';
 
-const ItemPost = () => {
+type ItemPostRouteProp = RouteProp<RootStackParamList, 'ItemDetail'>;
+
+type Props = {
+  route: ItemPostRouteProp;
+};
+
+const ItemPost: React.FC<Props> = ({route}) => {
   const [refrige, setRefrige] = useState('');
   const [user, setUser] = useState('');
 
@@ -16,6 +24,7 @@ const ItemPost = () => {
     };
     init();
   }, []);
+  const {product_id} = route.params;
 
   const handleOnMessage = event => {
     const {message} = JSON.parse(event.nativeEvent.data);
@@ -27,8 +36,8 @@ const ItemPost = () => {
         source={{
           uri:
             __DEV__ === true
-              ? `${LOCAL_URL}/itemPost?refrige_id=${refrige}&user_id=${user}`
-              : `${HOSTING_URL}/itemPost?refrige_id=${refrige}&user_id=${user}`,
+              ? `${LOCAL_URL}/itemPost??product_id=${product_id}?refrige_id=${refrige}&user_id=${user}`
+              : `${HOSTING_URL}/itemPost??product_id=${product_id}?refrige_id=${refrige}&user_id=${user}`,
         }}
         onMessage={handleOnMessage}
       />
