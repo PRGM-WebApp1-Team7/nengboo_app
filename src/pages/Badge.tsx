@@ -16,16 +16,20 @@ const Badge = () => {
     };
     init();
   }, []);
-
+  const handleOnMessage = event => {
+    const {message} = JSON.parse(event.nativeEvent.data);
+    console.log(message);
+  };
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
         source={{
           uri:
             __DEV__ === true
-              ? `${LOCAL_URL}/badge?refrige_id=${refrige}&user_id=${user}`
+              ? `${LOCAL_URL}/badge?user_id=${user}`
               : `${HOSTING_URL}/badge?refrige_id=${refrige}&user_id=${user}`,
         }}
+        onMessage={handleOnMessage}
       />
     </SafeAreaView>
   );

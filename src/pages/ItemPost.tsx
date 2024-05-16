@@ -17,6 +17,10 @@ const ItemPost = () => {
     init();
   }, []);
 
+  const handleOnMessage = event => {
+    const {message} = JSON.parse(event.nativeEvent.data);
+    console.log(message);
+  };
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
@@ -26,6 +30,7 @@ const ItemPost = () => {
               ? `${LOCAL_URL}/itemPost?refrige_id=${refrige}&user_id=${user}`
               : `${HOSTING_URL}/itemPost?refrige_id=${refrige}&user_id=${user}`,
         }}
+        onMessage={handleOnMessage}
       />
     </SafeAreaView>
   );
