@@ -13,6 +13,7 @@ type Props = {
 
 const ItemDetail: React.FC<Props> = ({route}) => {
   const {product_id} = route.params;
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
