@@ -71,6 +71,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
             barcode: data.barcode,
             product_memo: null,
             product_quantity: 1,
+            product_cookable: 'ingredient',
           };
 
           const {error: insertError} = await supabase
