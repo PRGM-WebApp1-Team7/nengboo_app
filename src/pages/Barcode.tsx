@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {SafeAreaView, Alert} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-import {Code, CodeScannerFrame} from 'react-native-vision-camera';
+import {Code, CodeScannerFrame, PhotoFile} from 'react-native-vision-camera';
 import BarcodeScanner from '../components/BarcodeScanner.tsx';
 import useCameraPermissions from '../hooks/useCameraPermission.tsx';
 import {RESULTS} from 'react-native-permissions';
@@ -122,17 +122,19 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
         .from('images')
         .getPublicUrl(`${imageData!.path}`);
 
+      const url = publicUrl.data.publicUrl;
+
       if (barcodeData) {
         await supabase
           .from('products')
-          .update({product_image: publicUrl})
+          .update({product_image: url})
           .eq('barcode', barcodeData);
 
         setPhotoCaptured(true);
       } else {
         const productData = {
-          product_image: publicUrl,
-          product_cookable: true,
+          product_image: url,
+          product_cookable: 'ingredient',
         };
 
         const {data: insertedData, error: insertError} = await supabase
@@ -143,6 +145,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
           throw new Error('제품 정보 삽입 실패: ' + insertError.message);
         }
         setPhotoCaptured(true);
+        console.log('제품 정보 삽입 성공!')
       }
     } catch (error) {
       console.error(error);
