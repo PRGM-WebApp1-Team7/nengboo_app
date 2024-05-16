@@ -107,10 +107,6 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
     }
   };
 
-  // const getFileUri = (uri: string) => {
-  //   return Platform.OS === 'android' ? uri : uri.replace('file://', '');
-  // };
-
   const handleImageCaptured = async (
     photo: PhotoFile,
     barcodeData?: string,
@@ -161,12 +157,12 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
         const {data: insertedData, error: insertError} = await supabase
           .from('products')
           .insert([insertData])
-          .select()
+          .select('product_id')
 
         if (insertError) {
           throw new Error('제품 정보 삽입 실패: ' + insertError.message);
         }
-
+        setProductId(product_id);
         setPhotoCaptured(true);
       }
     } catch (error) {
