@@ -4,10 +4,9 @@ import {WebView} from 'react-native-webview';
 import {LOCAL_URL, HOSTING_URL} from '@env';
 import {getData} from '../utils/asyncstorage';
 
-const Refrigerator = () => {
+const ItemSearch = ({route}) => {
   const [refrige, setRefrige] = useState('');
   const [user, setUser] = useState('');
-
   useEffect(() => {
     const init = async () => {
       const data = await getData();
@@ -16,20 +15,20 @@ const Refrigerator = () => {
     };
     init();
   }, []);
+  const {searchTerm} = route.params;
 
   const handleOnMessage = event => {
     const {message} = JSON.parse(event.nativeEvent.data);
     console.log(message);
   };
-
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView
         source={{
           uri:
             __DEV__ === true
-              ? `${LOCAL_URL}/refrigerator?refrige_id=${refrige}&user_id=${user}`
-              : `${HOSTING_URL}/refrigerator?refrige_id=${refrige}&user_id=${user}`,
+              ? `${LOCAL_URL}/itemSearch?product_id=${searchTerm}&refrige_id=${refrige}&user_id=${user}`
+              : `${HOSTING_URL}/itemSearch?product_id=${searchTerm}&refrige_id=${refrige}&user_id=${user}`,
         }}
         onMessage={handleOnMessage}
       />
@@ -37,4 +36,4 @@ const Refrigerator = () => {
   );
 };
 
-export default Refrigerator;
+export default ItemSearch;
