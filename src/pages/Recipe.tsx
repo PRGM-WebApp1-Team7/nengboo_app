@@ -6,6 +6,7 @@ import {getData} from '../utils/asyncstorage';
 
 const Recipe = () => {
   const [refrige, setRefrige] = useState('');
+
   useEffect(() => {
     const init = async () => {
       const data = await getData();
@@ -14,10 +15,12 @@ const Recipe = () => {
     };
     init();
   }, []);
+
   const handleOnMessage = event => {
     const {message} = JSON.parse(event.nativeEvent.data);
     console.log(message);
   };
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       {!!refrige ? (

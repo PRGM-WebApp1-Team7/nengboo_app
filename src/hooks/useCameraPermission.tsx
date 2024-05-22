@@ -6,12 +6,14 @@ import {
   PERMISSIONS,
   RESULTS,
 } from 'react-native-permissions';
+
 const useCameraPermissions = (): [
   PermissionStatus | null,
   () => Promise<PermissionStatus>,
 ] => {
   const [permissionStatus, setPermissionStatus] =
     useState<PermissionStatus | null>(null);
+
   const checkAndRequestPermission =
     useCallback(async (): Promise<PermissionStatus> => {
       const status = await check(PERMISSIONS.ANDROID.CAMERA);
@@ -26,6 +28,7 @@ const useCameraPermissions = (): [
         return status;
       }
     }, []);
+
   return [permissionStatus, checkAndRequestPermission];
 };
 export default useCameraPermissions;

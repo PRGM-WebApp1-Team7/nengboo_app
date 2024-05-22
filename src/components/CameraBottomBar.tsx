@@ -56,6 +56,7 @@ const CameraBottomBar: React.FC<CameraBottomBarProps> = ({
           </Text>
         </TouchableOpacity>
       </View>
+
       <View className={`flex-row justify-center items-center`}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={cancel} className={`opacity-100 w-8 h-8`} />

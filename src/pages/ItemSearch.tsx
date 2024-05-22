@@ -7,6 +7,7 @@ import {getData} from '../utils/asyncstorage';
 const ItemSearch = ({route}) => {
   const [refrige, setRefrige] = useState('');
   const [user, setUser] = useState('');
+
   useEffect(() => {
     const init = async () => {
       const data = await getData();
@@ -15,12 +16,14 @@ const ItemSearch = ({route}) => {
     };
     init();
   }, []);
+
   const {searchTerm} = route.params;
 
   const handleOnMessage = event => {
     const {message} = JSON.parse(event.nativeEvent.data);
     console.log(message);
   };
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView

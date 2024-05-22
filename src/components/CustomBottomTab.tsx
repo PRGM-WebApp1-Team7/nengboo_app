@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {styled} from 'nativewind';
-import {useRoute} from '@react-navigation/native';
 
 const refrigeOff = require('../assets/bottomTap/refrige_off.png');
 const refrigeOn = require('../assets/bottomTap/refrige_on.png');
@@ -17,7 +16,7 @@ const TouchArea = styled(TouchableOpacity);
 
 function CustomBottomTab({state, descriptors, navigation}) {
   const currentRoute = state.routes[state.index];
-  const shouldHideBottomTab = currentRoute.name === "스캔";
+  const shouldHideBottomTab = currentRoute.name === '스캔';
 
   if (shouldHideBottomTab) {
     return null;
