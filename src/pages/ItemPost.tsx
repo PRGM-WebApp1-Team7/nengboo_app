@@ -21,6 +21,7 @@ const ItemPost = () => {
     const {message} = JSON.parse(event.nativeEvent.data);
     console.log(message);
   };
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView

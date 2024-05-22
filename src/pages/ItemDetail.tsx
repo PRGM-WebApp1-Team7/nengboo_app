@@ -15,6 +15,7 @@ type Props = {
 const ItemDetail: React.FC<Props> = ({route}) => {
   const [refrige, setRefrige] = useState('');
   const [user, setUser] = useState('');
+
   useEffect(() => {
     const init = async () => {
       const data = await getData();
@@ -23,12 +24,14 @@ const ItemDetail: React.FC<Props> = ({route}) => {
     };
     init();
   }, []);
+
   const {product_id} = route.params;
 
   const handleOnMessage = event => {
     const {message} = JSON.parse(event.nativeEvent.data);
     console.log(message);
   };
+
   return (
     <SafeAreaView className={`flex flex-1`}>
       <WebView

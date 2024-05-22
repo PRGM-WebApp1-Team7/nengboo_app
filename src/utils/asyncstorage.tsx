@@ -8,6 +8,7 @@ export const storeData = async value => {
     console.log('asyncstorage error', e);
   }
 };
+
 export const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('userInfo');

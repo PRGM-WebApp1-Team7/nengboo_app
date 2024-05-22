@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {SafeAreaView, Platform} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-import {Code, CodeScannerFrame, PhotoFile} from 'react-native-vision-camera';
+import {Code, PhotoFile} from 'react-native-vision-camera';
 import BarcodeScanner from '../components/BarcodeScanner.tsx';
 import useCameraPermissions from '../hooks/useCameraPermission.tsx';
 import {RESULTS} from 'react-native-permissions';
@@ -107,10 +107,6 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
     }
   };
 
-  // const getFileUri = (uri: string) => {
-  //   return Platform.OS === 'android' ? uri : uri.replace('file://', '');
-  // };
-
   const handleImageCaptured = async (
     photo: PhotoFile,
     barcodeData?: string,
@@ -161,7 +157,7 @@ const Barcode: React.FC<BarcodeProps> = ({navigation}) => {
         const {data: insertedData, error: insertError} = await supabase
           .from('products')
           .insert([insertData])
-          .select()
+          .select();
 
         if (insertError) {
           throw new Error('제품 정보 삽입 실패: ' + insertError.message);

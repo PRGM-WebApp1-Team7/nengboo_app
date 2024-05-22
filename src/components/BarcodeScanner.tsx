@@ -4,7 +4,6 @@ import {
   useCameraDevice,
   useCodeScanner,
   Code,
-  CodeScannerFrame,
   PhotoFile,
 } from 'react-native-vision-camera';
 import {View, Alert} from 'react-native';
